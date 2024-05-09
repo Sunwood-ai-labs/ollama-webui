@@ -325,14 +325,16 @@ async def delete_model_from_config(
 async def proxy(path: str, request: Request, user=Depends(get_verified_user)):
     body = await request.body()
 
-    url = f"http://localhost:{LITELLM_PROXY_PORT}"
-
+    # url = f"http://localhost:{LITELLM_PROXY_PORT}"
+    url = f"http://litellm:{LITELLM_PROXY_PORT}"
+   
+    
     target_url = f"{url}/{path}"
-
+    log.info(f">>>>> target_url : {target_url}")
     headers = {}
     # headers["Authorization"] = f"Bearer {key}"
     headers["Content-Type"] = "application/json"
-
+    log.info(f">>>>> headers : {headers}")
     r = None
 
     try:
@@ -345,18 +347,25 @@ async def proxy(path: str, request: Request, user=Depends(get_verified_user)):
         )
 
         r.raise_for_status()
-
+        Content_Type = r.headers.get("Content-Type", "")
+        
+        log.info(f">>>>> Content_Type : {Content_Type}")
         # Check if response is SSE
         if "text/event-stream" in r.headers.get("Content-Type", ""):
+            log.info(">>>>> event-stream .......")
+            
             return StreamingResponse(
                 r.iter_content(chunk_size=8192),
                 status_code=r.status_code,
                 headers=dict(r.headers),
             )
         else:
+            log.info(">>>>> response_data .......")
             response_data = r.json()
             return response_data
+        
     except Exception as e:
+        log.info(">>>>> Exception ......")
         log.exception(e)
         error_detail = "Open WebUI: Server Connection Error"
         if r is not None:
