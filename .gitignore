@@ -302,3 +302,11 @@ dist
 # cypress artifacts
 cypress/videos
 cypress/screenshots
+SourceSageAssets/DocuMind.md
+SourceSageAssets/STAGED_DIFF.md
+SourceSageAssets/COMMIT_CRAFT/STAGE_INFO/STAGE_INFO_AND_ISSUES_AND_PROMT.md
+SourceSageAssets/COMMIT_CRAFT/STAGE_INFO/STAGE_INFO_AND_PROMT.md
+SourceSageAssets/Changelog/CHANGELOG_HEAD.md
+SourceSageAssets/Changelog/CHANGELOG_integrated.md
+SourceSageAssets/Changelog/CHANGELOG_main.md
+SourceSageAssets/ISSUE_LOG/open_issues_filtered.json
